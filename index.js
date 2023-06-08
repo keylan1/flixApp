@@ -1,9 +1,12 @@
 const express = require('express'),
-const morgan = require('morgan');
+      morgan = require('morgan'),
+      fs = require('fs'),
+      path = require('path');
 const app = express();
+const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'});
 
 app.use(express.static('public'));
-app.use(morgan('common'));
+app.use(morgan('combined', {stream: logStream}));
 
 let topMovies = [
   {
@@ -68,6 +71,11 @@ app.get('/movies', (req, res) => {
   res.json(topMovies);
 });
 
+//error-handling
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong');
+});
 
 // listen for requests
 app.listen(8080, () => {
