@@ -1,18 +1,70 @@
 const express = require('express'),
       morgan = require('morgan'),
       fs = require('fs'),
+      uuid = require('uuid'),
+      bodyParser = require('body-parser'),
       path = require('path');
 const app = express();
 const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'});
 
 app.use(express.static('public'));
 app.use(morgan('combined', {stream: logStream}));
+app.use(bodyParser.json());
+
+let users = [
+  {
+    userName: '',
+    email: '',
+    favoriteMovie: []
+  }
+];
 
 let topMovies = [
   {
     title: 'Harry Potter and the Sorcerer\'s Stone',
-    author: 'J.K. Rowling'
+    genre: {
+      genreName: '',
+      description: ''
+    },
+    director: {
+      name: 'J.K. Rowling',
+      bio: '',
+      birth: '',
+      death: ''
+    },
+    imageURL: ''
   },
+
+  {
+    title: 'Harry Potter and the Sorcerer\'s Stone',
+    genre: {
+      genreName: '',
+      description: ''
+    },
+    director: {
+      name: 'J.K. Rowling',
+      bio: '',
+      birth: '',
+      death: ''
+    },
+    imageURL: ''
+  },
+
+  {
+    title: 'Harry Potter and the Sorcerer\'s Stone',
+    genre: {
+      genreName: '',
+      description: ''
+    },
+    director: {
+      name: 'J.K. Rowling',
+      bio: '',
+      birth: '',
+      death: ''
+    },
+    imageURL: ''
+  },
+
   {
     title: 'Lord of the Rings',
     author: 'J.R.R. Tolkien'
@@ -24,37 +76,37 @@ let topMovies = [
 
   {
     title: 'The Princess Bride',
-    author: 'William Goldman'
+    director: 'William Goldman'
   },
 
   {
     title: 'Jane Eyre',
-    author: 'Charlotte Bronte'
+    director: 'Charlotte Bronte'
   },
 
   {
     title: 'Persuasion',
-    author: 'Jane Austen'
+    director: 'Jane Austen'
   },
 
   {
     title: 'The Emperor\'s new Groove',
-    author: 'Walt Disney'
+    director: 'Walt Disney'
   },
 
   { 
     title: 'Mulan',
-    author: 'Walt Disney'
+    director: 'Walt Disney'
   },
 
   {
     title: 'Enola Holmes',
-    author: 'Nancy Springer'
+    director: 'Nancy Springer'
   },
 
   {
     title: 'Miss Fisher\'s Murder Mysteries',
-    author: 'Kerry Greenwood'
+    director: 'Kerry Greenwood'
   }
 ];
 
