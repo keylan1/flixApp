@@ -51,7 +51,7 @@
       </tr>
       <tr>
         <td>Get data bout a movie</td>
-        <td>/movies/[name]</td>
+        <td>/movies/[title]</td>
         <td>GET</td>
         <td>None</td>
         <td>JSON obj about a single movie with ID, name, director (bio, birth, death), genre (name and description),
@@ -99,21 +99,21 @@
       </tr>
       <tr>
         <td>Allow users to update their username</td>
-        <td>/users/[userName]</td>
+        <td>/users/[email]</td>
         <td>PUT</td>
         <td>None</td>
         <td>Text message indicating the username was updated</td>
       </tr>
       <tr>
         <td>Allow users to add a movie to their favorites</td>
-        <td>/users/[username]/[favorites]</td>
+        <td>/users/[email]/favorites</td>
         <td>PUT</td>
         <td>None</td>
         <td>Text message indicating movie added by username</td>
       </tr>
       <tr>
         <td>Allow users to delete a movie from favorites</td>
-        <td>/users/[username]/[favorites]</td>
+        <td>/users/[email]/favorites</td>
         <td>DELETE</td>
         <td>None</td>
         <td>Text message confirming a movie was deleted from favorites </td>
