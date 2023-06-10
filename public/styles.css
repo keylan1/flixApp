@@ -5,6 +5,7 @@ body {
 p {
   display: grid;
   justify-content: center;
+  font-weight: bold;
 }
 
 table.cinereousTable {
