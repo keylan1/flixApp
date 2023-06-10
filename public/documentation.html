@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap"
     rel="stylesheet" />
   <title>flixApp</title>
-  <link rel="stylesheet" type="text/css" href="/public/styles.css" />
+  <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 
 <body>
@@ -29,6 +29,20 @@
     </thead>
     <tbody>
       <tr>
+        <td>Get intro page</td>
+        <td>/</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>Welcome to the flixApp!</td>
+      </tr>  
+      <tr>
+        <td>Get documentation</td>
+        <td>/documentation</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>HTML with documentation and request/response table</td>
+      </tr>
+      <tr>
         <td>Get a list of movies</td>
         <td>/movies</td>
         <td>GET</td>
@@ -40,13 +54,47 @@
         <td>/movies/[name]</td>
         <td>GET</td>
         <td>None</td>
-        <td>JSON obj about a single movie with ID, name, director (bio, birth, death), genre (name and description), description, image url, feateured. </td>
+        <td>JSON obj about a single movie with ID, name, director (bio, birth, death), genre (name and description),
+          description, image url, featured. 
+          <pre>[{title: 'Harry Potter and the Philosopher\'s Stone',
+          genre: {
+          genreName: 'Fantasy',
+          description: 'Stories that contain elements that are not realistic'
+          },
+          director: {
+          name: 'Chris Columbus',
+          bio: 'American film director, producer, and screenwriter',
+          birth: 'September 10, 1958',
+          death: '-'
+          },
+          description: `Harry Potter and the Philosopher's Stone" is a fantasy film based on J.K. Rowling's popular
+          book series.`,
+          imageURL:
+          `https://en.wikipedia.org/wiki/Harry_Potter_and_the_Philosopher%27s_Stone_%28film%29#/media/File:Harry_Potter_and_the_Philosopher's_Stone_banner.jpg`,
+          featured: true
+          }]</pre>
+        </td>
+      </tr>
+      <tr>
+        <td>Get list of users</td>
+        <td>/users</td>
+        <td>GET</td>
+        <td>JSON list with users
+        </td>
+        <td>Text message confirming registration with username \& email</td>
       </tr>
       <tr>
         <td>Allow new users to register</td>
         <td>/users</td>
         <td>POST</td>
-        <td>JSON with username, email, favorite movie</td>
+        <td>JSON with username, email, favorite movie.
+          <pre>[{"userName": "JackBNimble",
+          "email": "j.nimble@madeup.com",
+          "favoriteMovie": [
+          "Princess Bride"
+          ]
+          }]</pre>
+        </td>
         <td>Text message confirming registration with username \& email</td>
       </tr>
       <tr>

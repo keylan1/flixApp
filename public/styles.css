@@ -8,6 +8,10 @@ p {
   font-weight: bold;
 }
 
+pre {
+  text-align: left;
+}
+
 table.cinereousTable {
   font-family: tajawal, sans-serif;
   border: 2px solid #413A32;
@@ -47,8 +51,4 @@ table.cinereousTable thead th {
 
 table.cinereousTable thead th:first-child {
   border-left: none;
-}
-
-table.cinereousTable tfoot td {
-  font-size: 16px;
 }
