@@ -1,14 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap"
+    rel="stylesheet" />
   <title>flixApp</title>
+  <link rel="stylesheet" type="text/css" href="/public/styles.css" />
 </head>
+
 <body>
   <p>
-    The flixApp is a web application that provides users with information on movies and actors and lets them create different lists of movies and actors to watch/not to watch.
+    The flixApp is a web application that provides users with information on movies and lets them create
+    favorite lists of movies to watch.
   </p>
+
+  <table class="cinereousTable">
+    <thead>
+      <tr>
+        <th>Business Logic</th>
+        <th>URL</th>
+        <th>HTTP Method</th>
+        <th>Request body data format</th>
+        <th>Response body data format</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Get a list of movies</td>
+        <td>/movies</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON obj with list of movies</td>
+      </tr>
+      <tr>
+        <td>Get data bout a movie</td>
+        <td>/movies/[name]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON obj about a single movie with ID, name, director (bio, birth, death), genre (name and description), description, image url, feateured. </td>
+      </tr>
+      <tr>
+        <td>Allow new users to register</td>
+        <td>/users</td>
+        <td>POST</td>
+        <td>JSON with username, email, favorite movie</td>
+        <td>Text message confirming registration with username & email</td>
+      </tr>
+      <tr>
+        <td>Allow users to update their username</td>
+        <td>/users/[userName]</td>
+        <td>PUT</td>
+        <td>None</td>
+        <td>Text message indicating the username was updated</td>
+      </tr>
+      <tr>
+        <td>Allow users to add a movie to their favorites</td>
+        <td>/users/[username]/[favorites]</td>
+        <td>PUT</td>
+        <td>None</td>
+        <td>Text message indicating movie added by username</td>
+      </tr>
+      <tr>
+        <td>Allow users to delete a movie from favorites</td>
+        <td>/users/[username]/[favorites]</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>Text message confirming a movie was deleted from favorites </td>
+      </tr>
+      <tr>
+        <td>Allow users to deregister via email</td>
+        <td>/users/[userName]/[email]</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>Text confirming profile (username & email) was deleted</td>
+      </tr>
+    </tbody>
+    </tr>
+  </table>
 </body>
+
 </html>
