@@ -76,6 +76,32 @@
         </td>
       </tr>
       <tr>
+        <td>Get data about a genre</td>
+        <td>/movies/[genre]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON obj about a genre with name and description
+          <pre>[
+          {genre: {
+          genreName: 'Fantasy',
+          description: 'Stories that contain elements that are not realistic'
+          }}]</pre>
+        </td>
+      </tr> <tr>
+        <td>Get data about a director</td>
+        <td>/movies/[title]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON obj about a director with bio, birth, death. 
+          <pre>[{director: {
+          name: 'Chris Columbus',
+          bio: 'American film director, producer, and screenwriter',
+          birth: 'September 10, 1958',
+          death: '-'
+          }}]</pre>
+        </td>
+      </tr>
+      <tr>
         <td>Get list of users</td>
         <td>/users</td>
         <td>GET</td>
