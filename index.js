@@ -115,6 +115,30 @@ app.get('/movies/:title', (req, res) => {
   );
 });
 
+// Gets the data about a genre, by title
+app.get('/movies/genre/:name', (req, res) => {
+  const {name} = req.params;
+  const genre = topMovies.find((movie) => movie.genre.genreName === name);
+
+  if (genre) {
+    res.json(genre.genre);
+  } else {
+    res.send(`Genre ${name} not found`);
+  }
+});
+
+// Gets the data about a director, by name
+app.get('/movies/director/:name', (req, res) => {
+  const {name} = req.params;
+  const director = topMovies.find((movie) => movie.director.name === name);
+
+  if (director) {
+    res.json(director.director);
+  } else {
+    res.send(`Director ${name} not found`);
+  }
+});
+
 // POST requests
 
 // Adds data for a new user to our list of users.
