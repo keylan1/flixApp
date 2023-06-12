@@ -150,12 +150,14 @@ app.post('/users/:email/favorites', (req, res) => {
 // Allow users to update their user info (username)
 app.put('/users/:email', (req, res) => {
   const { email } = req.params;
-  const { newUsername } = req.body;
+  const { newUsername, newEmail, newFavoriteMovie,  } = req.body;
 
   const user = users.find((user) => user.email === email);
 
   if (user) {
     user.userName = newUsername;
+    user.email = newEmail;
+    user.favoriteMovie = newFavoriteMovie;
     res.status(200).send(`Username for email ${email} has been updated to ${newUsername}.`);
   } else {
     res.status(404).send(`User with email ${email} not found.`);
@@ -164,7 +166,7 @@ app.put('/users/:email', (req, res) => {
 
 // DELETE requests
 
-// Deletes a user from our list by email
+// Deletes a user from the list by email
 app.delete('/users/:email', (req, res) => {
   const { email } = req.params;
 
