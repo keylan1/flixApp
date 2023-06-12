@@ -1,69 +1,73 @@
 const express = require('express'),
-      morgan = require('morgan'),
-      fs = require('fs'),
-      uuid = require('uuid'),
-      bodyParser = require('body-parser'),
-      path = require('path');
+  morgan = require('morgan'),
+  fs = require('fs'),
+  uuid = require('uuid'),
+  bodyParser = require('body-parser'),
+  path = require('path');
 const app = express();
-const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'});
+const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
+  flags: 'a',
+});
 
 app.use(express.static('public'));
-app.use(morgan('combined', {stream: logStream}));
+app.use(morgan('combined', { stream: logStream }));
 app.use(bodyParser.json());
 
 let users = [
   {
     userName: 'JackBNimble',
     email: 'j.nimble@madeup.com',
-    favoriteMovie: ['Princess Bride']
+    favoriteMovie: ['Princess Bride'],
   },
 
   {
     userName: 'JillTree',
     email: 'jtree@madeup.comm',
-    favoriteMovie: ['Harry Potter and the Philosopher\'s Stone']
+    favoriteMovie: ["Harry Potter and the Philosopher's Stone"],
   },
 
   {
     userName: 'HumptyDumpty',
     email: 'humpty@allthekingsmen.com',
-    favoriteMovie: ['Mulan']
-  }
+    favoriteMovie: ['Mulan'],
+  },
 ];
 
 let topMovies = [
   {
-    title: 'Harry Potter and the Philosopher\'s Stone',
+    title: "Harry Potter and the Philosopher's Stone",
     genre: {
       genreName: 'Fantasy',
-      description: 'Stories that contain elements that are not realistic'
+      description: 'Stories that contain elements that are not realistic',
     },
     director: {
       name: 'Chris Columbus',
       bio: 'American film director, producer, and screenwriter',
       birth: 'September 10, 1958',
-      death: '-'
+      death: '-',
     },
     description: `Harry Potter and the Philosopher's Stone" is a fantasy film based on J.K. Rowling's popular book series. The story follows Harry Potter, an orphaned boy who discovers he is a wizard and is invited to attend Hogwarts School of Witchcraft and Wizardry. Alongside his new friends Ron and Hermione, Harry uncovers dark secrets, battles magical creatures, and encounters the evil wizard Lord Voldemort. It's a captivating tale of friendship, adventure, and the beginning of Harry's journey to becoming a legendary wizard.`,
     imageURL: `https://en.wikipedia.org/wiki/Harry_Potter_and_the_Philosopher%27s_Stone_%28film%29#/media/File:Harry_Potter_and_the_Philosopher's_Stone_banner.jpg`,
-    featured: true
+    featured: true,
   },
 
   {
     title: 'Mulan',
     genre: {
       genreName: 'Animated',
-      description: 'Films in which drawings are used in a way that makes them move as if they were alive'
+      description:
+        'Films in which drawings are used in a way that makes them move as if they were alive',
     },
     description: `"Mulan" is a thrilling and inspiring animated film from Disney. The story follows Mulan, a young Chinese woman who disguises herself as a man to take her father's place in the Imperial Army. With courage and determination, Mulan faces challenges and fights against the invading Huns, showcasing her bravery and resourcefulness. The film explores themes of gender identity, honor, and family while highlighting Mulan's journey of self-discovery and her quest to bring honor to her family. "Mulan" is a captivating tale of empowerment, resilience, and the importance of staying true to oneself.`,
     director: {
       name: 'Barry Cook',
       bio: 'American film director in the animation industry',
       birth: '12 August 1958',
-      death: '-'
+      death: '-',
     },
-    imageURL: 'https://upload.wikimedia.org/wikipedia/en/a/a3/Movie_poster_mulan.JPG',
-    featured: true
+    imageURL:
+      'https://upload.wikimedia.org/wikipedia/en/a/a3/Movie_poster_mulan.JPG',
+    featured: true,
   },
 
   {
@@ -77,11 +81,11 @@ let topMovies = [
       name: 'Rob Reiner',
       bio: 'American actor and filmmaker',
       birth: 'March 6, 1947',
-      death: '-'
+      death: '-',
     },
     imageURL: `https://en.wikipedia.org/wiki/The_Princess_Bride_(film)#/media/File:Princess_bride.jpg`,
-    featured: true
-  }
+    featured: true,
+  },
 ];
 
 // GET requests
@@ -92,7 +96,7 @@ app.get('/', (req, res) => {
 });
 
 // Gets the documentation page
-app.get('/documentation', (req, res) => {                  
+app.get('/documentation', (req, res) => {
   res.sendFile('public/documentation.html', { root: __dirname });
 });
 
@@ -117,7 +121,7 @@ app.get('/movies/:title', (req, res) => {
 
 // Gets the data about a genre, by title
 app.get('/movies/genre/:name', (req, res) => {
-  const {name} = req.params;
+  const { name } = req.params;
   const genre = topMovies.find((movie) => movie.genre.genreName === name);
 
   if (genre) {
@@ -129,7 +133,7 @@ app.get('/movies/genre/:name', (req, res) => {
 
 // Gets the data about a director, by name
 app.get('/movies/director/:name', (req, res) => {
-  const {name} = req.params;
+  const { name } = req.params;
   const director = topMovies.find((movie) => movie.director.name === name);
 
   if (director) {
@@ -155,7 +159,7 @@ app.post('/users', (req, res) => {
 });
 
 // Allow users to add a movie to their list of favorites
-app.post('/users/:email/favorites', (req, res) => {
+app.post('/users/:email/favorites/:movie', (req, res) => {
   const { email } = req.params;
   const { movie } = req.body;
 
@@ -163,7 +167,11 @@ app.post('/users/:email/favorites', (req, res) => {
 
   if (user) {
     user.favoriteMovie.push(movie);
-    res.status(201).send(`Movie "${movie}" has been added to favorites for user with email ${email}.`);
+    res
+      .status(201)
+      .send(
+        `Movie "${movie}" has been added to favorites for user with email ${email}.`
+      );
   } else {
     res.status(404).send(`User with email ${email} not found.`);
   }
@@ -171,10 +179,10 @@ app.post('/users/:email/favorites', (req, res) => {
 
 // PUT requests
 
-// Allow users to update their user info (username)
+// Allow users to update their user info
 app.put('/users/:email', (req, res) => {
   const { email } = req.params;
-  const { newUsername, newEmail, newFavoriteMovie,  } = req.body;
+  const { newUsername, newEmail, newFavoriteMovie } = req.body;
 
   const user = users.find((user) => user.email === email);
 
@@ -182,7 +190,9 @@ app.put('/users/:email', (req, res) => {
     user.userName = newUsername;
     user.email = newEmail;
     user.favoriteMovie = newFavoriteMovie;
-    res.status(200).send(`Username for email ${email} has been updated to ${newUsername}.`);
+    res
+      .status(200)
+      .send(`Username for email ${email} has been updated to ${newUsername}.`);
   } else {
     res.status(404).send(`User with email ${email} not found.`);
   }
@@ -198,7 +208,11 @@ app.delete('/users/:email', (req, res) => {
 
   if (user) {
     users = users.filter((user) => user.email !== email);
-    res.status(201).send(`User ${req.params.userName} with email ${email} has been deleted.`)
+    res
+      .status(201)
+      .send(
+        `User ${req.params.userName} with email ${email} has been deleted.`
+      );
   } else {
     res.status(404).send(`User with email ${email} not found.`);
   }
@@ -220,9 +234,13 @@ app.delete('/users/:email/favorites/:movie', (req, res) => {
     return;
   }
 
-  user.favoriteMovie = user.favoriteMovie.filter((favMovie) => favMovie !== movie);
+  user.favoriteMovie = user.favoriteMovie.filter(
+    (favMovie) => favMovie !== movie
+  );
 
-  res.status(200).send(`Movie ${movie} removed from favorites for ${user.userName}.`);
+  res
+    .status(200)
+    .send(`Movie ${movie} removed from favorites for ${user.userName}.`);
 });
 
 //error-handling
