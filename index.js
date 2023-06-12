@@ -159,7 +159,8 @@ app.post('/users', (req, res) => {
 });
 
 // Allow users to add a movie to their list of favorites
-app.post('/users/:email/favorites/:movie', (req, res) => {
+
+app.put('/users/:email/favorites', (req, res) => {
   const { email } = req.params;
   const { movie } = req.body;
 
@@ -177,6 +178,25 @@ app.post('/users/:email/favorites/:movie', (req, res) => {
   }
 });
 
+/* Altnerative approach through endpoint:
+app.post('/users/:email/favorites/:movie', (req, res) => {
+  const { email, movie } = req.params;
+
+  const user = users.find((user) => user.email === email);
+
+  if (user) {
+    user.favoriteMovie.push(movie);
+    res
+      .status(201)
+      .send(
+        `Movie "${movie}" has been added to favorites for user with email ${email}.`
+      );
+  } else {
+    res.status(404).send(`User with email ${email} not found.`);
+  }
+});*/
+
+
 // PUT requests
 
 // Allow users to update their user info
@@ -192,7 +212,7 @@ app.put('/users/:email', (req, res) => {
     user.favoriteMovie = newFavoriteMovie;
     res
       .status(200)
-      .send(`Username for email ${email} has been updated to ${newUsername}.`);
+      .send(`User has updated info to email: ${newEmail}, username: ${newUsername}, and ${newFavoriteMovie}.`);
   } else {
     res.status(404).send(`User with email ${email} not found.`);
   }
@@ -211,7 +231,7 @@ app.delete('/users/:email', (req, res) => {
     res
       .status(201)
       .send(
-        `User ${req.params.userName} with email ${email} has been deleted.`
+        `User ${user.userName} with email ${email} has been deleted.`
       );
   } else {
     res.status(404).send(`User with email ${email} not found.`);

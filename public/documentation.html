@@ -77,7 +77,7 @@
       </tr>
       <tr>
         <td>Get data about a genre</td>
-        <td>/movies/[genre]</td>
+        <td>/movies/genre/[name]</td>
         <td>GET</td>
         <td>None</td>
         <td>JSON obj about a genre with name and description
@@ -89,7 +89,7 @@
         </td>
       </tr> <tr>
         <td>Get data about a director</td>
-        <td>/movies/[title]</td>
+        <td>/movies/director/[name]</td>
         <td>GET</td>
         <td>None</td>
         <td>JSON obj about a director with bio, birth, death. 
@@ -105,9 +105,9 @@
         <td>Get list of users</td>
         <td>/users</td>
         <td>GET</td>
-        <td>JSON list with users
+        <td>None
         </td>
-        <td>Text message confirming registration with username \& email</td>
+        <td>JSON list with users</td>
       </tr>
       <tr>
         <td>Allow new users to register</td>
@@ -124,29 +124,29 @@
         <td>Text message confirming registration with username \& email</td>
       </tr>
       <tr>
-        <td>Allow users to update their username</td>
+        <td>Allow users to update their user info</td>
         <td>/users/[email]</td>
         <td>PUT</td>
-        <td>None</td>
-        <td>Text message indicating the username was updated</td>
+        <td>JSON with <pre>[{"newUsername": "newUsername", "newEmail": "newEmail", "newFavoriteMovie: [""]"}]</pre></td>
+        <td>Text message indicating the user info (email, name and movie) was updated</td>
       </tr>
       <tr>
         <td>Allow users to add a movie to their favorites</td>
         <td>/users/[email]/favorites</td>
         <td>PUT</td>
-        <td>None</td>
-        <td>Text message indicating movie added by username</td>
+        <td>JSON with {"movie": [movieName]}</td>
+        <td>Text message indicating movie added by email</td>
       </tr>
       <tr>
         <td>Allow users to delete a movie from favorites</td>
-        <td>/users/[email]/favorites</td>
+        <td>/users/[email]/favorites/[movie]</td>
         <td>DELETE</td>
         <td>None</td>
         <td>Text message confirming a movie was deleted from favorites </td>
       </tr>
       <tr>
         <td>Allow users to deregister via email</td>
-        <td>/users/[userName]/[email]</td>
+        <td>/users//[email]</td>
         <td>DELETE</td>
         <td>None</td>
         <td>Text confirming profile (username \& email) was deleted</td>
