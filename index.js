@@ -165,16 +165,16 @@ app.put('/users/:email', (req, res) => {
 // DELETE requests
 
 // Deletes a user from our list by email
-app.delete('/users/:userName/:email', (req, res) => {
-  let user = users.find((user) => {
-    return user.email === req.params.email;
-  });
+app.delete('/users/:email', (req, res) => {
+  const { email } = req.params;
+
+  const user = users.find((user) => user.email === email);
 
   if (user) {
-    students = users.filter((obj) => {
-      return obj.email !== req.params.email;
-    });
-    res.status(201).send(`Username ${req.params.userName} with email ${req.params.email} was deleted.`);
+    users = users.filter((user) => user.email !== email);
+    res.status(201).send(`User ${req.params.userName} with email ${email} has been deleted.`)
+  } else {
+    res.status(404).send(`User with email ${email} not found.`);
   }
 });
 
