@@ -17,23 +17,23 @@ let users = [
   {
     userName: 'JackBNimble',
     email: 'j.nimble@madeup.com',
-    favoriteMovie: ['Princess Bride'],
+    favoriteMovies: ['Princess Bride'],
   },
 
   {
     userName: 'JillTree',
     email: 'jtree@madeup.comm',
-    favoriteMovie: ["Harry Potter and the Philosopher's Stone"],
+    favoriteMovies: ["Harry Potter and the Philosopher's Stone"],
   },
 
   {
     userName: 'HumptyDumpty',
     email: 'humpty@allthekingsmen.com',
-    favoriteMovie: ['Mulan'],
+    favoriteMovies: ['Mulan'],
   },
 ];
 
-let topMovies = [
+let dbMoviesMovies = [
   {
     title: "Harry Potter and the Philosopher's Stone",
     genre: {
@@ -113,16 +113,16 @@ app.get('/users', (req, res) => {
 // Gets the data about a single movie, by title
 app.get('/movies/:title', (req, res) => {
   res.json(
-    topMovies.find((movie) => {
+    dbMovies.find((movie) => {
       return movie.title === req.params.title;
     })
   );
 });
 
-// Gets the data about a genre, by title
+// Gets the data about a genre, by name
 app.get('/movies/genre/:name', (req, res) => {
   const { name } = req.params;
-  const genre = topMovies.find((movie) => movie.genre.genreName === name);
+  const genre = dbMovies.find((movie) => movie.genre.genreName === name);
 
   if (genre) {
     res.json(genre.genre);
@@ -134,7 +134,7 @@ app.get('/movies/genre/:name', (req, res) => {
 // Gets the data about a director, by name
 app.get('/movies/director/:name', (req, res) => {
   const { name } = req.params;
-  const director = topMovies.find((movie) => movie.director.name === name);
+  const director = dbMovies.find((movie) => movie.director.name === name);
 
   if (director) {
     res.json(director.director);
@@ -167,7 +167,7 @@ app.put('/users/:email/favorites', (req, res) => {
   const user = users.find((user) => user.email === email);
 
   if (user) {
-    user.favoriteMovie.push(movie);
+    user.favoriteMovies.push(movie);
     res
       .status(201)
       .send(
@@ -178,7 +178,7 @@ app.put('/users/:email/favorites', (req, res) => {
   }
 });
 
-/* Altnerative approach through endpoint:
+/* Alternative approach through endpoint:
 app.post('/users/:email/favorites/:movie', (req, res) => {
   const { email, movie } = req.params;
 
@@ -202,17 +202,17 @@ app.post('/users/:email/favorites/:movie', (req, res) => {
 // Allow users to update their user info
 app.put('/users/:email', (req, res) => {
   const { email } = req.params;
-  const { newUsername, newEmail, newFavoriteMovie } = req.body;
+  const { newUsername, newEmail, newFavoriteMovies } = req.body;
 
   const user = users.find((user) => user.email === email);
 
   if (user) {
     user.userName = newUsername;
     user.email = newEmail;
-    user.favoriteMovie = newFavoriteMovie;
+    user.favoriteMovies = newFavoriteMovies;
     res
       .status(200)
-      .send(`User has updated info to email: ${newEmail}, username: ${newUsername}, and ${newFavoriteMovie}.`);
+      .send(`User has updated info to email: ${newEmail}, username: ${newUsername}, and ${newFavoriteMovies}.`);
   } else {
     res.status(404).send(`User with email ${email} not found.`);
   }
@@ -249,12 +249,12 @@ app.delete('/users/:email/favorites/:movie', (req, res) => {
     return;
   }
 
-  if (!user.favoriteMovie.includes(movie)) {
+  if (!user.favoriteMovies.includes(movie)) {
     res.status(404).send('Movie not found in favorites');
     return;
   }
 
-  user.favoriteMovie = user.favoriteMovie.filter(
+  user.favoriteMovies = user.favoriteMovies.filter(
     (favMovie) => favMovie !== movie
   );
 
