@@ -4,6 +4,14 @@ const express = require('express'),
   uuid = require('uuid'),
   bodyParser = require('body-parser'),
   path = require('path');
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
+mongoose.connect('mongodb://localhost:27017/flixAppDB', {useNewUrlParser: true, useUnifiedTopology: true});
+
 const app = express();
 const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
   flags: 'a',
