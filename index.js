@@ -10,7 +10,10 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/myFlixAppDB', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/myFlixAppDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const app = express();
 const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
@@ -22,81 +25,6 @@ app.use(morgan('combined', { stream: logStream }));
 app.use(bodyParser.json());
 //Used to parse form data for the server
 app.use(bodyParser.urlencoded({ extended: true }));
-
-let users = [
-  {
-    userName: 'JackBNimble',
-    email: 'j.nimble@madeup.com',
-    favoriteMovies: ['Princess Bride'],
-  },
-
-  {
-    userName: 'JillTree',
-    email: 'jtree@madeup.comm',
-    favoriteMovies: ["Harry Potter and the Philosopher's Stone"],
-  },
-
-  {
-    userName: 'HumptyDumpty',
-    email: 'humpty@allthekingsmen.com',
-    favoriteMovies: ['Mulan'],
-  },
-];
-
-let dbMoviesMovies = [
-  {
-    title: "Harry Potter and the Philosopher's Stone",
-    genre: {
-      genreName: 'Fantasy',
-      description: 'Stories that contain elements that are not realistic',
-    },
-    director: {
-      name: 'Chris Columbus',
-      bio: 'American film director, producer, and screenwriter',
-      birth: 'September 10, 1958',
-      death: '-',
-    },
-    description: `Harry Potter and the Philosopher's Stone" is a fantasy film based on J.K. Rowling's popular book series. The story follows Harry Potter, an orphaned boy who discovers he is a wizard and is invited to attend Hogwarts School of Witchcraft and Wizardry. Alongside his new friends Ron and Hermione, Harry uncovers dark secrets, battles magical creatures, and encounters the evil wizard Lord Voldemort. It's a captivating tale of friendship, adventure, and the beginning of Harry's journey to becoming a legendary wizard.`,
-    imageURL: `https://en.wikipedia.org/wiki/Harry_Potter_and_the_Philosopher%27s_Stone_%28film%29#/media/File:Harry_Potter_and_the_Philosopher's_Stone_banner.jpg`,
-    featured: true,
-  },
-
-  {
-    title: 'Mulan',
-    genre: {
-      genreName: 'Animated',
-      description:
-        'Films in which drawings are used in a way that makes them move as if they were alive',
-    },
-    description: `"Mulan" is a thrilling and inspiring animated film from Disney. The story follows Mulan, a young Chinese woman who disguises herself as a man to take her father's place in the Imperial Army. With courage and determination, Mulan faces challenges and fights against the invading Huns, showcasing her bravery and resourcefulness. The film explores themes of gender identity, honor, and family while highlighting Mulan's journey of self-discovery and her quest to bring honor to her family. "Mulan" is a captivating tale of empowerment, resilience, and the importance of staying true to oneself.`,
-    director: {
-      name: 'Barry Cook',
-      bio: 'American film director in the animation industry',
-      birth: '12 August 1958',
-      death: '-',
-    },
-    imageURL:
-      'https://upload.wikimedia.org/wikipedia/en/a/a3/Movie_poster_mulan.JPG',
-    featured: true,
-  },
-
-  {
-    title: 'The Princess Bride',
-    genre: {
-      genreName: 'Fantasy',
-      description: 'Films that contain elements that are not realistic',
-    },
-    description: `"The Princess Bride" is a beloved fantasy-adventure film that combines romance, humor, and swashbuckling action. The story revolves around a young woman named Buttercup and her true love, Westley. Separated by fate, they face numerous obstacles, including a vengeful prince, a clever swordsman, and a giant with a kind heart. Filled with witty dialogue, memorable characters, and a timeless love story, "The Princess Bride" is a charming and whimsical tale that has enchanted audiences for decades.`,
-    director: {
-      name: 'Rob Reiner',
-      bio: 'American actor and filmmaker',
-      birth: 'March 6, 1947',
-      death: '-',
-    },
-    imageURL: `https://en.wikipedia.org/wiki/The_Princess_Bride_(film)#/media/File:Princess_bride.jpg`,
-    featured: true,
-  },
-];
 
 // GET requests
 
@@ -116,8 +44,29 @@ app.get('/movies', (req, res) => {
 });
 
 // Gets the data about all users
+
 app.get('/users', (req, res) => {
-  res.json(users);
+  Users.find()
+    .then((users) => {
+      res.status(201).json(users);
+    })
+    .catch((error) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+// Get single user
+
+app.get('/users/:Username', (req, res) => {
+  Users.findOne({ Username: req.params.Username })
+    .then((user) => {
+      res.status(201).json(user);
+    })
+    .catch((error) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 // Gets the data about a single movie, by title
@@ -143,14 +92,14 @@ app.get('/movies/genre/:name', (req, res) => {
 
 // Gets the data about a director, by name
 app.get('/movies/director/:name', (req, res) => {
-  const { name } = req.params;
-  const director = dbMovies.find((movie) => movie.director.name === name);
-
-  if (director) {
-    res.json(director.director);
-  } else {
-    res.send(`Director ${name} not found`);
-  }
+  Movies.findOne({"Director.Name": req.params.name}, { Director: 1 }) 
+.then((director) => {
+  res.status(200).json(director);
+})
+.catch((err) => {
+  console.error(err);
+  res.status(500).send('Error: ' + err);
+});
 });
 
 // POST requests
@@ -165,147 +114,124 @@ app.get('/movies/director/:name', (req, res) => {
   Birthday: Date
 }*/
 
-/* Old code
 app.post('/users', (req, res) => {
-  let newUser = req.body;
-
-  if (!newUser.userName) {
-    const message = 'Missing username in request body';
-    res.status(400).send(message);
-  } else {
-    users.push(newUser);
-    res.status(201).send(newUser);
-  }
-});
-*/
-
-app.post('/users', (req, res)=> {
-  Users.findOne({Username: req.body.Username}).then((user)=> {
-    if (user) {
-      return res.status(400).send(req.body.Username + 'already exists');
-    } else {
-      Users.create({
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday
-      }).then((user)=>{res.status(201).json(user)})
-    .catch((error)=> {
+  //findOne checks if username already exists
+  Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(req.body.Username + 'already exists');
+      } else {
+        Users.create({
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday,
+        })
+          .then((user) => {
+            res.status(201).json(user);
+          })
+          .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+          });
+      }
+    })
+    .catch((error) => {
       console.error(error);
       res.status(500).send('Error: ' + error);
+    });
+});
+
+// Add a movie to their list of favorites
+
+app.post('/users/:Username/FavoriteMovies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $push: { FavoriteMovies: req.params.MovieID },
+    },
+    { new: true }
+  )
+    .then((updatedUser) => {
+      res.json(updatedUser);
     })
-  }
-})
-.catch((error)=> {
-  console.error(error);
-  res.status(500).send('Error: ' + error);
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
-});
-  
-
-// Allow users to add a movie to their list of favorites
-
-app.put('/users/:email/favorites', (req, res) => {
-  const { email } = req.params;
-  const { movie } = req.body;
-
-  const user = users.find((user) => user.email === email);
-
-  if (user) {
-    user.favoriteMovies.push(movie);
-    res
-      .status(201)
-      .send(
-        `Movie "${movie}" has been added to favorites for user with email ${email}.`
-      );
-  } else {
-    res.status(404).send(`User with email ${email} not found.`);
-  }
-});
-
-/* Alternative approach through endpoint:
-app.post('/users/:email/favorites/:movie', (req, res) => {
-  const { email, movie } = req.params;
-
-  const user = users.find((user) => user.email === email);
-
-  if (user) {
-    user.favoriteMovie.push(movie);
-    res
-      .status(201)
-      .send(
-        `Movie "${movie}" has been added to favorites for user with email ${email}.`
-      );
-  } else {
-    res.status(404).send(`User with email ${email} not found.`);
-  }
-});*/
-
 
 // PUT requests
 
-// Allow users to update their user info
-app.put('/users/:email', (req, res) => {
-  const { email } = req.params;
-  const { newUsername, newEmail, newFavoriteMovies } = req.body;
+// Allow users to update their user info, via username
+/* JSON Format expected:
+{
+  Username: String,
+  (required)
+  Password: String,
+  (required)
+  Email: String,
+  (required)
+  Birthday: Date
+}*/
 
-  const user = users.find((user) => user.email === email);
-
-  if (user) {
-    user.userName = newUsername;
-    user.email = newEmail;
-    user.favoriteMovies = newFavoriteMovies;
-    res
-      .status(200)
-      .send(`User has updated info to email: ${newEmail}, username: ${newUsername}, and ${newFavoriteMovies}.`);
-  } else {
-    res.status(404).send(`User with email ${email} not found.`);
-  }
+app.put('/users/:Username', (req, res) => {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $set: {
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday,
+      },
+    },
+    { new: true }
+  ) //returns new data
+    .then((updatedUser) => {
+      res.json(updatedUser);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 // DELETE requests
 
-// Deletes a user from the list by email
-app.delete('/users/:email', (req, res) => {
-  const { email } = req.params;
-
-  const user = users.find((user) => user.email === email);
-
-  if (user) {
-    users = users.filter((user) => user.email !== email);
-    res
-      .status(201)
-      .send(
-        `User ${user.userName} with email ${email} has been deleted.`
-      );
-  } else {
-    res.status(404).send(`User with email ${email} not found.`);
-  }
+// Deletes a user from the list by username
+app.delete('/users/:Username', (req, res) => {
+  Users.findOneAndRemove({Username: req.params.Username})
+  .then((user) => {
+    if (!user) {
+      res.status(400).send(req.params.Username + 'was not found.');
+    } else {
+      res.status(200).send(req.params.Username + ' was deleted.');
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
 });
 
-// Deletes a movie from the user's favorite list by email
-app.delete('/users/:email/favorites/:movie', (req, res) => {
-  const { email, movie } = req.params;
+// Deletes a movie from the user's favorite list
 
-  const user = users.find((user) => user.email === email);
-
-  if (!user) {
-    res.status(404).send('User not found');
-    return;
-  }
-
-  if (!user.favoriteMovies.includes(movie)) {
-    res.status(404).send('Movie not found in favorites');
-    return;
-  }
-
-  user.favoriteMovies = user.favoriteMovies.filter(
-    (favMovie) => favMovie !== movie
-  );
-
-  res
-    .status(200)
-    .send(`Movie ${movie} removed from favorites for ${user.userName}.`);
+app.delete('/users/:Username/FavoriteMovies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $pull: { FavoriteMovies: req.params.MovieID },
+    },
+    { new: true }
+  )
+    .then((updatedUser) => {
+      res.json(updatedUser);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
 //error-handling
