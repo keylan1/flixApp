@@ -10,7 +10,7 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/flixAppDB', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/myFlixAppDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const app = express();
 const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
@@ -20,6 +20,8 @@ const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
 app.use(express.static('public'));
 app.use(morgan('combined', { stream: logStream }));
 app.use(bodyParser.json());
+//Used to parse form data for the server
+app.use(bodyParser.urlencoded({ extended: true }));
 
 let users = [
   {
@@ -154,6 +156,16 @@ app.get('/movies/director/:name', (req, res) => {
 // POST requests
 
 // Adds data for a new user to our list of users.
+/* Expected JSON format
+{
+  ID: Integer,
+  Username: String,
+  Password: String,
+  Email: String,
+  Birthday: Date
+}*/
+
+/* Old code
 app.post('/users', (req, res) => {
   let newUser = req.body;
 
@@ -165,6 +177,31 @@ app.post('/users', (req, res) => {
     res.status(201).send(newUser);
   }
 });
+*/
+
+app.post('/users', (req, res)=> {
+  Users.findOne({Username: req.body.Username}).then((user)=> {
+    if (user) {
+      return res.status(400).send(req.body.Username + 'already exists');
+    } else {
+      Users.create({
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
+      }).then((user)=>{res.status(201).json(user)})
+    .catch((error)=> {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    })
+  }
+})
+.catch((error)=> {
+  console.error(error);
+  res.status(500).send('Error: ' + error);
+});
+});
+  
 
 // Allow users to add a movie to their list of favorites
 
