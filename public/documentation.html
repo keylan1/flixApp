@@ -34,7 +34,7 @@
         <td>GET</td>
         <td>None</td>
         <td>Welcome to the flixApp!</td>
-      </tr>  
+      </tr>
       <tr>
         <td>Get documentation</td>
         <td>/documentation</td>
@@ -54,25 +54,23 @@
         <td>/movies/[title]</td>
         <td>GET</td>
         <td>None</td>
-        <td>JSON obj about a single movie with ID, name, director (bio, birth, death), genre (name and description),
-          description, image url, featured. 
-          <pre>[{title: 'Harry Potter and the Philosopher\'s Stone',
-          genre: {
-          genreName: 'Fantasy',
-          description: 'Stories that contain elements that are not realistic'
-          },
-          director: {
-          name: 'Chris Columbus',
-          bio: 'American film director, producer, and screenwriter',
-          birth: 'September 10, 1958',
-          death: '-'
-          },
-          description: `Harry Potter and the Philosopher's Stone" is a fantasy film based on J.K. Rowling's popular
-          book series.`,
-          imageURL:
-          `https://en.wikipedia.org/wiki/Harry_Potter_and_the_Philosopher%27s_Stone_%28film%29#/media/File:Harry_Potter_and_the_Philosopher's_Stone_banner.jpg`,
-          featured: true
-          }]</pre>
+        <td>JSON obj about a single movie.
+          <pre>
+            {"Title": "",
+            "Description: "",
+            "Genre: {
+              "Name": "",
+              "Description": ""
+            },
+            "Director": {
+              "Name: "",
+              "Bio": "",
+              "Birth": "",
+              "Death": ""
+            },
+          "ImagePath": "",
+          Featured: true
+          }</pre>
         </td>
       </tr>
       <tr>
@@ -81,24 +79,25 @@
         <td>GET</td>
         <td>None</td>
         <td>JSON obj about a genre with name and description
-          <pre>[
-          {genre: {
-          genreName: 'Fantasy',
-          description: 'Stories that contain elements that are not realistic'
-          }}]</pre>
+          <pre>
+          {"Genre": {
+          "Name": "",
+          "Description": ""
+          }}</pre>
         </td>
-      </tr> <tr>
+      </tr>
+      <tr>
         <td>Get data about a director</td>
         <td>/movies/director/[name]</td>
         <td>GET</td>
         <td>None</td>
-        <td>JSON obj about a director with bio, birth, death. 
-          <pre>[{director: {
-          name: 'Chris Columbus',
-          bio: 'American film director, producer, and screenwriter',
-          birth: 'September 10, 1958',
-          death: '-'
-          }}]</pre>
+        <td>JSON obj about a director.
+          <pre>{"Director": {
+            "Name": "",
+            "Bio": "",
+            "Birth": "Date",
+            "Death": "Date"
+          }}</pre>
         </td>
       </tr>
       <tr>
@@ -110,46 +109,67 @@
         <td>JSON list with users</td>
       </tr>
       <tr>
+        <td>Get info on single user</td>
+        <td>/users/[Username]</td>
+        <td>GET</td>
+        <td>None
+        </td>
+        <td>JSON list with user information
+          <pre>
+            {
+              "Username": "",
+              "Password": "",
+              "Email": "",
+              "Birthday": "",
+              "FavoriteMovies": [""]
+            }
+        </pre>
+        </td>
+      </tr>
+      <tr>
         <td>Allow new users to register</td>
         <td>/users</td>
         <td>POST</td>
         <td>JSON with username, email, favorite movie.
-          <pre>[{"userName": "JackBNimble",
-          "email": "j.nimble@madeup.com",
-          "favoriteMovie": [
-          "Princess Bride"
-          ]
-          }]</pre>
+          <pre>{"Username": "",
+            "Password": "",
+            "Email": "",
+            "Birthday": ""}</pre>
         </td>
-        <td>Text message confirming registration with username \& email</td>
+        <td>JSON message confirming registration with info</td>
       </tr>
       <tr>
-        <td>Allow users to update their user info</td>
-        <td>/users/[email]</td>
+        <td>Allow users to update their user info by username</td>
+        <td>/users/[Username]</td>
         <td>PUT</td>
-        <td>JSON with <pre>[{"newUsername": "newUsername", "newEmail": "newEmail", "newFavoriteMovie: [""]"}]</pre></td>
-        <td>Text message indicating the user info (email, name and movie) was updated</td>
+        <td>JSON with
+          <pre>[{"Username": "", 
+            "Password": "", 
+            "Email": "", 
+            "Birthday": ""}]</pre>
+        </td>
+        <td>JSON message with the updated user info</td>
       </tr>
       <tr>
         <td>Allow users to add a movie to their favorites</td>
-        <td>/users/[email]/favorites</td>
+        <td>/users/[Username]/FavoriteMovies/[MovieID]</td>
         <td>PUT</td>
-        <td>JSON with {"movie": [movieName]}</td>
-        <td>Text message indicating movie added by email</td>
+        <td>None</td>
+        <td>JSON output of user info with updated FM array</td>
       </tr>
       <tr>
         <td>Allow users to delete a movie from favorites</td>
-        <td>/users/[email]/favorites/[movie]</td>
+        <td>/users/[Username]/FavoriteMovies/[MovieID]</td>
         <td>DELETE</td>
         <td>None</td>
-        <td>Text message confirming a movie was deleted from favorites </td>
+        <td>JSON output of user info with updated FM array</td>
       </tr>
       <tr>
-        <td>Allow users to deregister via email</td>
-        <td>/users//[email]</td>
+        <td>Allow users to deregister</td>
+        <td>/users/[Username]</td>
         <td>DELETE</td>
         <td>None</td>
-        <td>Text confirming profile (username \& email) was deleted</td>
+        <td>Text confirming username was deleted</td>
       </tr>
     </tbody>
   </table>
