@@ -65,8 +65,8 @@
             "Director": {
               "Name: "",
               "Bio": "",
-              "Birth": "",
-              "Death": ""
+              "Birth": "Date",
+              "Death": "Date"
             },
           "ImagePath": "",
           Featured: true
@@ -120,7 +120,7 @@
               "Username": "",
               "Password": "",
               "Email": "",
-              "Birthday": "",
+              "Birthday": "Date",
               "FavoriteMovies": [""]
             }
         </pre>
@@ -134,7 +134,7 @@
           <pre>{"Username": "",
             "Password": "",
             "Email": "",
-            "Birthday": ""}</pre>
+            "Birthday": "Date"}</pre>
         </td>
         <td>JSON message confirming registration with info</td>
       </tr>
@@ -143,10 +143,10 @@
         <td>/users/[Username]</td>
         <td>PUT</td>
         <td>JSON with
-          <pre>[{"Username": "", 
+          <pre>{"Username": "", 
             "Password": "", 
             "Email": "", 
-            "Birthday": ""}]</pre>
+            "Birthday": "Date"}</pre>
         </td>
         <td>JSON message with the updated user info</td>
       </tr>
