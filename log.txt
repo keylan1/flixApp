@@ -216,3 +216,7 @@ Timestamp: Tue Jun 06 2023 20:36:22 GMT+0200 (Central European Summer Time)
 ::1 - - [19/Jun/2023:21:25:14 +0000] "GET /movies/director/Chris%20Columbus HTTP/1.1" 200 686 "-" "PostmanRuntime/7.32.2"
 ::1 - - [19/Jun/2023:21:25:35 +0000] "GET /movies/Director/Chris%20Columbus HTTP/1.1" 200 686 "-" "PostmanRuntime/7.32.2"
 ::1 - - [19/Jun/2023:21:28:46 +0000] "GET /movies/Director/Chris%20Columbus HTTP/1.1" 200 179 "-" "PostmanRuntime/7.32.2"
+::1 - - [19/Jun/2023:21:33:28 +0000] "GET /movies HTTP/1.1" 201 9782 "-" "PostmanRuntime/7.32.2"
+::1 - - [19/Jun/2023:21:37:22 +0000] "GET /movies/Silence%20of%20the%20Lambs HTTP/1.1" 201 705 "-" "PostmanRuntime/7.32.2"
+::1 - - [19/Jun/2023:21:39:23 +0000] "GET /movies/genre/thriller HTTP/1.1" 200 4 "-" "PostmanRuntime/7.32.2"
+::1 - - [19/Jun/2023:21:39:28 +0000] "GET /movies/genre/Thriller HTTP/1.1" 200 220 "-" "PostmanRuntime/7.32.2"
