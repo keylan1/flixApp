@@ -67,6 +67,7 @@ app.get('/users', (req, res) => {
 
 app.get('/users/:Username', (req, res) => {
   Users.findOne({ Username: req.params.Username })
+  .populate('FavoriteMovies', 'Title Description')
     .then((user) => {
       res.status(201).json(user);
     })
