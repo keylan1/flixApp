@@ -26,6 +26,12 @@ app.use(bodyParser.json());
 //Used to parse form data for the server
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Import and use the auth module passing the app object
+let auth = require('./auth')(app);
+
+const passport = require('passport');
+require ('./passort');
+
 // GET requests
 
 // Gets the default page
