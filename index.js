@@ -4,18 +4,17 @@ const express = require('express'),
   uuid = require('uuid'),
   bodyParser = require('body-parser'),
   path = require('path');
+const app = express();
 const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/myFlixAppDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/myFlixAppDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-const app = express();
 const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
   flags: 'a',
 });
@@ -27,10 +26,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Import and use the auth module passing the app object
-let auth = require('./auth')(app);
+let auth = require('./auth.js')(app);
 
 const passport = require('passport');
-require('./passport');
+require('./passport.js');
 
 // GET requests
 
@@ -46,8 +45,7 @@ app.get('/documentation', (req, res) => {
 
 // Gets the data about all movies
 app.get(
-  '/movies',
-  passport.authenticate('jwt', { session: false }),
+  '/movies', passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Movies.find()
       .then((movies) => {
