@@ -1,35 +1,39 @@
-const express = require('express'),
-  morgan = require('morgan'),
-  fs = require('fs'),
-  uuid = require('uuid'),
-  bodyParser = require('body-parser'),
-  path = require('path');
+const express = require('express');
 const app = express();
+const morgan = require('morgan');
+const fs = require('fs');
+const uuid = require('uuid');
+const bodyParser = require('body-parser');
+const path = require('path');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/myFlixAppDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
 
+mongoose.connect('mongodb://localhost:27017/myFlixAppDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
 const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
   flags: 'a',
 });
+app.use(morgan('combined', { stream: logStream }));
 
 app.use(express.static('public'));
-app.use(morgan('combined', { stream: logStream }));
 app.use(bodyParser.json());
-//Used to parse form data for the server
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Import and use the auth module passing the app object
-let auth = require('./auth.js')(app);
+const auth = require('./auth.js')(app);
 
 const passport = require('passport');
 require('./passport.js');
+
+// Rest of your code goes here
+
 
 // GET requests
 
