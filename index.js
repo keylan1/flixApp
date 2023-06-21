@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 let auth = require('./auth')(app);
 
 const passport = require('passport');
-require ('./passort');
+require('./passport');
 
 // GET requests
 
@@ -45,16 +45,20 @@ app.get('/documentation', (req, res) => {
 });
 
 // Gets the data about all movies
-app.get('/movies', passport.authenticate('jwt, {session: false}'), (req, res) => {
-  Movies.find()
-    .then((movies) => {
-      res.status(201).json(movies);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    });
-});
+app.get(
+  '/movies',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Movies.find()
+      .then((movies) => {
+        res.status(201).json(movies);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      });
+  }
+);
 
 // Gets the data about all users
 
@@ -73,7 +77,7 @@ app.get('/users', (req, res) => {
 
 app.get('/users/:Username', (req, res) => {
   Users.findOne({ Username: req.params.Username })
-  .populate('FavoriteMovies', 'Title Description')
+    .populate('FavoriteMovies', 'Title Description')
     .then((user) => {
       res.status(201).json(user);
     })
