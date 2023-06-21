@@ -348,3 +348,6 @@ Timestamp: Tue Jun 06 2023 20:36:22 GMT+0200 (Central European Summer Time)
 ::1 - tryagain [21/Jun/2023:20:14:28 +0000] "POST /login HTTP/1.1" 400 49 "-" "PostmanRuntime/7.32.3"
 ::1 - tryagain [21/Jun/2023:20:14:29 +0000] "POST /login HTTP/1.1" 400 49 "-" "PostmanRuntime/7.32.3"
 ::1 - - [21/Jun/2023:20:14:39 +0000] "POST /login?Username=tryagain&Password=why HTTP/1.1" 400 36 "-" "PostmanRuntime/7.32.3"
+::1 - - [21/Jun/2023:20:23:03 +0000] "POST /login?Username=tryagain&Password=why HTTP/1.1" 400 36 "-" "PostmanRuntime/7.32.3"
+::1 - - [21/Jun/2023:20:23:42 +0000] "POST /users HTTP/1.1" 400 22 "-" "PostmanRuntime/7.32.3"
+::1 - - [21/Jun/2023:20:23:48 +0000] "POST /login?Username=tryagain&Password=why HTTP/1.1" 400 36 "-" "PostmanRuntime/7.32.3"
