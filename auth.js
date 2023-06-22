@@ -17,15 +17,20 @@ let generateJWTToken = (user) => {
 
 module.exports = (router) => {
   router.post('/login', (req, res) => {
+    console.log('Login request received');
     passport.authenticate('local', { session: false }, (error, user, info) => {
+      console.log('Passport authentication callback');
       if (error || !user) {
+        console.log('Authentication failed:', error);
         return res.status(400).json({
           message: 'Something is not right',
           user: user,
         });
       }
       req.login(user, { session: false }, (error) => {
+        console.log('User login callback');
         if (error) {
+          console.log('Error during user login:', error);
           res.send(error);
         }
         let token = generateJWTToken(user.toJSON());
