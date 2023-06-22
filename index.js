@@ -155,6 +155,7 @@ app.get('/movies/director/:name', passport.authenticate('jwt', { session: false 
 }*/
 
 app.post('/users', (req, res) => {
+  let hashedPassword = Users.hashPassword(req.body.Password);
   //findOne checks if username already exists
   Users.findOne({ Username: req.body.Username })
     .then((user) => {
@@ -163,7 +164,7 @@ app.post('/users', (req, res) => {
       } else {
         Users.create({
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
         })
