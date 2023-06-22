@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //CORS, allowed origins
 
-/*const cors = require('cors');
+const cors = require('cors');
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
 app.use(cors({
@@ -40,7 +40,7 @@ app.use(cors({
     }
     return callback(null, true);
   }
-}));*/
+}));
 
 // Import and use the auth module passing the app object
 const auth = require('./auth.js')(app);
@@ -156,8 +156,8 @@ app.get('/movies/director/:name', passport.authenticate('jwt', { session: false 
 }*/
 
 app.post('/users', (req, res) => {
-  /*let hashedPassword = Users.hashPassword(req.body.Password);
-  console.log(hashedPassword);*/
+  let hashedPassword = Users.hashPassword(req.body.Password);
+  console.log(hashedPassword);
   //findOne checks if username already exists
   Users.findOne({ Username: req.body.Username })
     .then((user) => {
@@ -166,7 +166,7 @@ app.post('/users', (req, res) => {
       } else {
         Users.create({
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
         })
