@@ -67,7 +67,7 @@ app.get('/documentation', (req, res) => {
 
 // Gets the data about all movies
 app.get(
-  '/movies', passport.authenticate('jwt', { session: false }),
+  '/movies', /*passport.authenticate('jwt', { session: false }),*/
   (req, res) => {
     Movies.find()
       .then((movies) => {
@@ -144,6 +144,21 @@ app.get('/movies/director/:name', passport.authenticate('jwt', { session: false 
     });
 });
 
+// Search movies by actor name
+app.get('/movies/actors/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const actorName = req.params.name;
+
+  Movies.find({ Actors: { $in: [actorName] } }, { Title: 1, Description: 1 })
+    .then((movies) => {
+      res.status(200).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+
 // POST requests
 
 // Adds data for a new user to our list of users.
@@ -156,7 +171,7 @@ app.get('/movies/director/:name', passport.authenticate('jwt', { session: false 
   Birthday: Date
 }*/
 
-app.post('/users', [check('Username', 'Username is required').isLength({min: 5}), check('Username', 'Username contains non-alphanumeric characters, not allowed.').isAlphanumeric(), check('Password', 'Password is required').not.isEmpty(), check('Email', 'Email does not appear to be valid').isEmail()], (req, res) => {
+app.post('/users', [check('Username', 'Username is required').isLength({min: 5}), check('Username', 'Username contains non-alphanumeric characters, not allowed.').isAlphanumeric(), check('Password', 'Password is required').not().isEmpty(), check('Email', 'Email does not appear to be valid').isEmail()], (req, res) => {
   // check for val errors
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
