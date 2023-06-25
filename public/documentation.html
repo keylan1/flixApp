@@ -101,6 +101,18 @@
         </td>
       </tr>
       <tr>
+        <td>Get movies by actor name</td>
+        <td>/movies/actors/[name]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON obj with a list of movies for a specific actor.
+          <pre>{
+            "Title": "",
+            "Description": ""
+          }</pre>
+        </td>
+      </tr>
+      <tr>
         <td>Get list of users</td>
         <td>/users</td>
         <td>GET</td>
@@ -130,7 +142,7 @@
         <td>Allow new users to register</td>
         <td>/users</td>
         <td>POST</td>
-        <td>JSON with username, email, favorite movie.
+        <td>JSON with username, password, email, and birthday.
           <pre>{"Username": "",
             "Password": "",
             "Email": "",
