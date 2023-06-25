@@ -15,6 +15,7 @@ let movieSchema = mongoose.Schema({
   Actors: [String],
   ImagePath: String,
   Featured: Boolean,
+  Year: {type: Number}
 });
 
 let userSchema = mongoose.Schema({
