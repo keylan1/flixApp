@@ -6,6 +6,7 @@ const uuid = require('uuid');
 const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
+const {check, validationResult} = require('express-validator');
 
 const Models = require('./models.js');
 
@@ -66,7 +67,7 @@ app.get('/documentation', (req, res) => {
 
 // Gets the data about all movies
 app.get(
-  '/movies', passport.authenticate('jwt', { session: false }),
+  '/movies', /*passport.authenticate('jwt', { session: false }),*/
   (req, res) => {
     Movies.find()
       .then((movies) => {
@@ -143,6 +144,21 @@ app.get('/movies/director/:name', passport.authenticate('jwt', { session: false 
     });
 });
 
+// Search movies by actor name
+app.get('/movies/actors/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const actorName = req.params.name;
+
+  Movies.find({ Actors: { $in: [actorName] } }, { Title: 1, Description: 1 })
+    .then((movies) => {
+      res.status(200).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+
 // POST requests
 
 // Adds data for a new user to our list of users.
@@ -155,7 +171,12 @@ app.get('/movies/director/:name', passport.authenticate('jwt', { session: false 
   Birthday: Date
 }*/
 
-app.post('/users', (req, res) => {
+app.post('/users', [check('Username', 'Username is required').isLength({min: 5}), check('Username', 'Username contains non-alphanumeric characters, not allowed.').isAlphanumeric(), check('Password', 'Password is required').not().isEmpty(), check('Email', 'Email does not appear to be valid').isEmail()], (req, res) => {
+  // check for val errors
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({errors: errors.array()});
+  }
   let hashedPassword = Users.hashPassword(req.body.Password);
   console.log(hashedPassword);
   //findOne checks if username already exists
@@ -284,6 +305,7 @@ app.use((err, req, res, next) => {
 });
 
 // listen for requests
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+  console.log('Your app is listening on port ' + port);
 });
