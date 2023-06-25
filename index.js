@@ -13,10 +13,15 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/myFlixAppDB', {
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+/*mongoose.connect('mongodb://localhost:27017/myFlixAppDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});*/
 
 const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
   flags: 'a',
