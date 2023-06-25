@@ -284,28 +284,6 @@ app.put(
   }
 );
 
-/*app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndUpdate(
-    { Username: req.params.Username },
-    {
-      $set: {
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Birthday: req.body.Birthday,
-      },
-    },
-    { new: true }
-  ) //returns new data
-    .then((updatedUser) => {
-      res.json(updatedUser);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error: ' + err);
-    });
-});*/
-
 // DELETE requests
 
 // Deletes a user from the list by username
