@@ -244,7 +244,47 @@ app.post('/users/:Username/FavoriteMovies/:MovieID', passport.authenticate('jwt'
   Birthday: Date
 }*/
 
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.put(
+  '/users/:Username',
+  [
+    passport.authenticate('jwt', { session: false }),
+    check('Username')
+      .isLength({ min: 5 }).withMessage('Username is required')
+      .isAlphanumeric().withMessage('Username contains non-alphanumeric characters, not allowed.'),
+    check('Password').not().isEmpty().withMessage('Password is required'),
+    check('Email').isEmail().withMessage('Email does not appear to be valid')
+  ],
+  (req, res) => {
+    // Check for validation errors
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    console.log(hashedPassword);
+    Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      {
+        $set: {
+          Username: req.body.Username,
+          Password: hashedPassword,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday,
+        },
+      },
+      { new: true }
+    ) // Returns new data
+      .then((updatedUser) => {
+        res.json(updatedUser);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+      });
+  }
+);
+
+/*app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.Username },
     {
@@ -264,7 +304,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (r
       console.error(error);
       res.status(500).send('Error: ' + err);
     });
-});
+});*/
 
 // DELETE requests
 
