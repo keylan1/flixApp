@@ -453,3 +453,5 @@ Timestamp: Tue Jun 06 2023 20:36:22 GMT+0200 (Central European Summer Time)
 ::1 - - [24/Jun/2023:19:31:48 +0000] "GET /movies HTTP/1.1" 401 - "-" "PostmanRuntime/7.32.3"
 ::1 - - [24/Jun/2023:19:31:55 +0000] "GET /movies HTTP/1.1" 401 - "-" "PostmanRuntime/7.32.3"
 ::1 - - [24/Jun/2023:19:32:52 +0000] "GET /movies HTTP/1.1" 201 11057 "-" "PostmanRuntime/7.32.3"
+127.0.0.1 - - [25/Jun/2023:12:38:49 +0000] "POST /users HTTP/1.1" 422 109 "-" "PostmanRuntime/7.32.3"
+127.0.0.1 - - [25/Jun/2023:12:41:24 +0000] "POST /users HTTP/1.1" 201 213 "-" "PostmanRuntime/7.32.3"
