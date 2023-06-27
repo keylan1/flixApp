@@ -76,7 +76,7 @@ app.get(
   (req, res) => {
     Movies.find()
       .then((movies) => {
-        res.status(201).json(movies);
+        res.status(200).json(movies);
       })
       .catch((err) => {
         console.error(err);
@@ -90,7 +90,7 @@ app.get(
 app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.find()
     .then((users) => {
-      res.status(201).json(users);
+      res.status(200).json(users);
     })
     .catch((err) => {
       console.error(err);
@@ -104,7 +104,7 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
   Users.findOne({ Username: req.params.Username })
     .populate('FavoriteMovies', 'Title Description')
     .then((user) => {
-      res.status(201).json(user);
+      res.status(200).json(user);
     })
     .catch((error) => {
       console.error(err);
@@ -116,7 +116,7 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
 app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ Title: req.params.title })
     .then((movie) => {
-      res.status(201).json(movie);
+      res.status(200).json(movie);
     })
     .catch((err) => {
       console.error(err);
@@ -222,7 +222,7 @@ app.post('/users/:Username/FavoriteMovies/:MovieID', passport.authenticate('jwt'
     { new: true }
   )
     .then((updatedUser) => {
-      res.json(updatedUser);
+      res.status(200).json(updatedUser);
     })
     .catch((err) => {
       console.error(err);
@@ -291,7 +291,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
   Users.findOneAndRemove({ Username: req.params.Username })
     .then((user) => {
       if (!user) {
-        res.status(400).send(req.params.Username + 'was not found.');
+        res.status(404).send(req.params.Username + 'was not found.');
       } else {
         res.status(200).send(req.params.Username + ' was deleted.');
       }
@@ -313,7 +313,7 @@ app.delete('/users/:Username/FavoriteMovies/:MovieID', passport.authenticate('jw
     { new: true }
   )
     .then((updatedUser) => {
-      res.json(updatedUser);
+      res.status(200).json(updatedUser);
     })
     .catch((err) => {
       console.error(err);
