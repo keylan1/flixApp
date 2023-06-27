@@ -176,7 +176,7 @@ app.get('/movies/actors/:name', passport.authenticate('jwt', { session: false })
   Birthday: Date
 }*/
 
-app.post('/users', [check('Username', 'Username is required').isLength({min: 5}), check('Username', 'Username contains non-alphanumeric characters, not allowed.').isAlphanumeric(), check('Password', 'Password is required').not().isEmpty(), check('Email', 'Email does not appear to be valid').isEmail()], (req, res) => {
+app.post('/users', [check('Username', 'Username is required and needs to be at least 5 characters').isLength({min: 5}), check('Username', 'Username contains non-alphanumeric characters, not allowed.').isAlphanumeric(), check('Password', 'Password is required').not().isEmpty(), check('Email', 'Email does not appear to be valid').isEmail()], (req, res) => {
   // check for val errors
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
