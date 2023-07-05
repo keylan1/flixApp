@@ -11,9 +11,9 @@ let generateJWTToken = (user) => {
     expiresIn: '7d', //specifies token expires in 7 days
     algorithm: 'HS256', // algorithm used to "sign" or encode the values of the JWT
   });
-}
+};
 
-/* POST login. */ 
+/* POST login. */
 
 module.exports = (router) => {
   router.post('/login', (req, res) => {
@@ -27,9 +27,6 @@ module.exports = (router) => {
       req.login(user, { session: false }, (error) => {
         if (error) {
           res.send(error);
-        }
-        let user = {
-          other ID info
         }
         let token = generateJWTToken(user.toJSON());
         return res.json({ user, token });
