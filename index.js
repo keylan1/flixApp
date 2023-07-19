@@ -13,7 +13,7 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 //console.log(process.env.CONNECTION_URI);
-mongoose.connect(process.env.CONNECTION_URI, {
+mongoose.connect(process.env.CONNECT_YOU_IDIOT, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
