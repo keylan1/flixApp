@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -11,6 +12,8 @@ const { check, validationResult } = require('express-validator');
 const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
+
+console.log(process.env.CONNECT_YOU_IDIOT);
 
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
