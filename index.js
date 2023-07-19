@@ -96,8 +96,8 @@ app.get(
 // Gets the data about all users
 
 app.get(
-  '/users',
-  passport.authenticate('jwt', { session: false }),
+  '/users' /*
+  passport.authenticate('jwt', { session: false }),*/,
   (req, res) => {
     Users.find()
       .then((users) => {
