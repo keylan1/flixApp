@@ -38,6 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require('cors');
 let allowedOrigins = [
+  'https://keylan1.github.io',
   'https://mflixapp.netlify.app',
   'https://keylan1.github.io/mFlixApp-Angular',
   'https://flixapptime-44f9e1282e9e.herokuapp.com',
