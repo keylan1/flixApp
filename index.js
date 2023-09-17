@@ -44,6 +44,7 @@ let allowedOrigins = [
   'http://testsite.com',
   'https://mflixapp.netlify.app',
   'https://keylan1.github.io/mFlixApp-Angular',
+  'https://flixapptime-44f9e1282e9e.herokuapp.com',
 ];
 
 app.use(
