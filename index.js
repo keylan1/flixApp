@@ -43,6 +43,7 @@ let allowedOrigins = [
   'http://localhost:1234',
   'http://testsite.com',
   'https://mflixapp.netlify.app',
+  'https://keylan1.github.io/mFlixApp-Angular',
 ];
 
 app.use(
