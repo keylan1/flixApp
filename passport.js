@@ -1,3 +1,7 @@
+/**
+ * Passport configuration for local and JWT authentication strategies.
+ * @module passport-config
+ */
 const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
   Models = require('./models.js'),
@@ -7,6 +11,11 @@ let Users = Models.User,
   JWTStrategy = passportJWT.Strategy,
   ExtractJWT = passportJWT.ExtractJwt;
 
+/**
+ * Configures the LocalStrategy for authenticating users with a username and password.
+ * @function
+ * @name configureLocalStrategy
+ */
 passport.use(
   new LocalStrategy(
     {
@@ -27,9 +36,9 @@ passport.use(
             message: 'Incorrect username.',
           });
         }
-        if(!user.validatePassword(password)) {
+        if (!user.validatePassword(password)) {
           console.log(password + 'incorrect password');
-          return callback(null, false, {message: 'Incorrect password.'});
+          return callback(null, false, { message: 'Incorrect password.' });
         }
 
         console.log('finished');
@@ -39,6 +48,11 @@ passport.use(
   )
 );
 
+/**
+ * Configures the JWTStrategy for authenticating users with a JSON Web Token.
+ * @function
+ * @name configureJWTStrategy
+ */
 passport.use(
   new JWTStrategy(
     {

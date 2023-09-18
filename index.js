@@ -1,3 +1,11 @@
+/**
+ * @module index.js
+ * @description This is the main module of this application which holds all the API calls
+ */
+
+/**
+ * Imports required modules and sets up the Express application.
+ */
 require('dotenv').config();
 const express = require('express');
 const app = express();
@@ -25,6 +33,9 @@ mongoose.connect(process.env.CONNECTION_URI, {
   useUnifiedTopology: true,
 });*/
 
+/**
+ * Create a log stream for logging HTTP requests.
+ */
 const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
   flags: 'a',
 });
@@ -34,7 +45,9 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//CORS, allowed origins
+/**
+ * Define allowed CORS origins.
+ */
 
 const cors = require('cors');
 let allowedOrigins = [
@@ -48,6 +61,11 @@ let allowedOrigins = [
   'http://testsite.com',
 ];
 
+/**
+ * Configure CORS middleware.
+ * @param {string} origin - The origin of the incoming request.
+ * @param {function} callback - The callback function to invoke.
+ */
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -68,21 +86,31 @@ const passport = require('passport');
 //const { has } = require('lodash');
 require('./passport.js');
 
-// Rest of your code goes here
-
 // GET requests
 
-// Gets the default page
+/**
+ * Default route to welcome users.
+ * @route GET /
+ * @returns {string} Welcome message.
+ */
 app.get('/', (req, res) => {
   res.send('Welcome to the flixApp!');
 });
 
-// Gets the documentation page
+/**
+ * Route to serve documentation page.
+ * @route GET /documentation
+ * @returns {string} The HTML documentation page.
+ */
 app.get('/documentation', (req, res) => {
   res.sendFile('public/documentation.html', { root: __dirname });
 });
 
-// Gets the data about all movies
+/**
+ * Route to get data about all movies.
+ * @route GET /movies
+ * @returns {Array} An array of movie objects.
+ */
 app.get(
   '/movies' /*
   passport.authenticate('jwt', { session: false }),*/,
@@ -98,7 +126,11 @@ app.get(
   }
 );
 
-// Gets the data about all users
+/**
+ * Route to get data about all users.
+ * @route GET /users
+ * @returns {Array} An array of user objects.
+ */
 
 app.get(
   '/users',
@@ -115,7 +147,12 @@ app.get(
   }
 );
 
-// Get single user
+/**
+ * Route to get data about a single user by username.
+ * @route GET /users/:Username
+ * @param {string} Username.path.required - The username of the user to retrieve.
+ * @returns {Object} The user object.
+ */
 
 app.get(
   '/users/:Username',
@@ -133,7 +170,12 @@ app.get(
   }
 );
 
-// Gets the data about a single movie, by title
+/**
+ * Route to get data about a single movie by title.
+ * @route GET /movies/:title
+ * @param {string} title.path.required - The title of the movie to retrieve.
+ * @returns {Object} The movie object.
+ */
 app.get(
   '/movies/:title',
   passport.authenticate('jwt', { session: false }),
@@ -150,6 +192,12 @@ app.get(
 );
 
 // Gets the data about a genre, by name
+/**
+ * Route to get data about a genre by name.
+ * @route GET /movies/genre/:name
+ * @param {string} name.path.required - The name of the genre to retrieve.
+ * @returns {Object} The genre object.
+ */
 
 app.get(
   '/movies/genre/:name',
@@ -167,6 +215,12 @@ app.get(
 );
 
 // Gets the data about a director, by name
+/**
+ * Route to get data about a director by name.
+ * @route GET /movies/director/:name
+ * @param {string} name.path.required - The name of the director to retrieve.
+ * @returns {Object} The director object.
+ */
 app.get(
   '/movies/director/:name',
   passport.authenticate('jwt', { session: false }),
@@ -183,6 +237,12 @@ app.get(
 );
 
 // Search movies by actor name
+/**
+ * Route to search movies by actor name.
+ * @route GET /movies/actors/:name
+ * @param {string} name.path.required - The name of the actor to search for.
+ * @returns {Array} An array of movie objects matching the actor name.
+ */
 app.get(
   '/movies/actors/:name',
   passport.authenticate('jwt', { session: false }),
@@ -211,7 +271,16 @@ app.get(
   Email: String,
   Birthday: Date
 }*/
-
+/**
+ * Route to add data for a new user.
+ * @route POST /users
+ * @param {Object} req.body.required - The user data to be added.
+ * @param {string} req.body.Username.required - The username of the new user.
+ * @param {string} req.body.Password.required - The password of the new user.
+ * @param {string} req.body.Email.required - The email of the new user.
+ * @param {Date} req.body.Birthday.required - The birthday of the new user.
+ * @returns {Object} The created user object.
+ */
 app.post(
   '/users',
   [
@@ -263,6 +332,13 @@ app.post(
 );
 
 // Add a movie to their list of favorites
+/**
+ * Route to add a movie to a user's list of favorite movies.
+ * @route POST /users/:Username/FavoriteMovies/:MovieID
+ * @param {string} Username.path.required - The username of the user.
+ * @param {string} MovieID.path.required - The ID of the movie to add to favorites.
+ * @returns {Object} The updated user object.
+ */
 
 app.post(
   '/users/:Username/FavoriteMovies/:MovieID',
@@ -299,6 +375,17 @@ app.post(
   Birthday: Date
 }*/
 
+/**
+ * Route to update user information.
+ * @route PUT /users/:Username
+ * @param {string} Username.path.required - The username of the user to update.
+ * @param {Object} req.body.required - The updated user data.
+ * @param {string} req.body.Username.required - The new username.
+ * @param {string} req.body.Password.required - The new password.
+ * @param {string} req.body.Email.required - The new email.
+ * @param {Date} req.body.Birthday.required - The new birthday.
+ * @returns {Object} The updated user object.
+ */
 app.put(
   '/users/:Username',
   [
@@ -345,7 +432,12 @@ app.put(
 
 // DELETE requests
 
-// Deletes a user from the list by username
+/**
+ * Route to delete a user by username.
+ * @route DELETE /users/:Username
+ * @param {string} Username.path.required - The username of the user to delete.
+ * @returns {string} A message indicating success or failure.
+ */
 app.delete(
   '/users/:Username',
   passport.authenticate('jwt', { session: false }),
@@ -365,7 +457,13 @@ app.delete(
   }
 );
 
-// Deletes a movie from the user's favorite list
+/**
+ * Route to delete a movie from a user's list of favorite movies.
+ * @route DELETE /users/:Username/FavoriteMovies/:MovieID
+ * @param {string} Username.path.required - The username of the user.
+ * @param {string} MovieID.path.required - The ID of the movie to remove from favorites.
+ * @returns {Object} The updated user object.
+ */
 
 app.delete(
   '/users/:Username/FavoriteMovies/:MovieID',
@@ -388,7 +486,13 @@ app.delete(
   }
 );
 
-//error-handling
+/**
+ * Error handling middleware for the application.
+ * @param {Error} err - The error object.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {function} next - The next middleware function.
+ */
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something went wrong');
