@@ -1,5 +1,5 @@
 /**
- * @module index.js
+ *
  * @description This is the main module of this application which holds all the API calls
  */
 
