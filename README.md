@@ -1,6 +1,17 @@
 # FlixApp - Movie Database REST API
 
+## Project Description
+
 FlixApp is a RESTful API and backend for a movie database. It is built using Node.js, Express, and MongoDB. The API provides endpoints to manage user accounts, store favorite movies, search for movies, directors, genres, and actors, and update user information.
+
+## Table of Contents
+
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [API Endpoints](#api-endpoints)
+- [Contributing](#contributing)
 
 ## Features
 
@@ -12,6 +23,19 @@ FlixApp is a RESTful API and backend for a movie database. It is built using Nod
 - Genre Search: Browse movies by different genres.
 - Actor Search: Look up movies featuring specific actors.
 - User Profile Update: Users can update their personal information, including username, password, and email.
+
+## Technologies Used
+
+The FlixApp REST API is built using the following technologies:
+
+- Node.js
+- Express.js
+- MongoDB (Database)
+- JSON Web Tokens (JWT) for authentication
+- Heroku (for hosting the server)
+- Mongoose (MongoDB Object Modeling)
+- Body-parser (Middleware for parsing JSON)
+- Morgan (Logging middleware)
 
 ## Prerequisites
 
@@ -68,8 +92,3 @@ Please refer to the API documentation or code implementation for detailed inform
 ## Contributing
 
 Contributions to the FlixApp project are welcome! Feel free to open issues for bug reports or feature requests. If you'd like to contribute code, please fork the repository and submit a pull request with your changes.
-
-## License
-
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT). Feel free to modify and use it according to your needs.
-```
