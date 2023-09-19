@@ -34,7 +34,7 @@
     <div class="container-overview">
     
         
-            <div class="description">This is the main module of this application which holds all the API calls</div>
+            <div class="description">API Calls for Movie API</div>
         
 
         
@@ -102,13 +102,13 @@
 
         
             
-<h4 class="name" id="~cors"><span class="type-signature">(inner, constant) </span>cors<span class="type-signature"></span></h4>
+<h4 class="name" id="~DELETE/users/:Username"><span class="type-signature">(inner) </span>DELETE /users/:Username<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    Define allowed CORS origins.
+    Delete a user by username.
 </div>
 
 
@@ -146,7 +146,77 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line52">line 52</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line448">line 448</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example request:
+// DELETE /users/usernameToDelete
+// Example response:
+// "usernameToDelete was deleted."</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~DELETE/users/:Username/FavoriteMovies/:MovieID"><span class="type-signature">(inner) </span>DELETE /users/:Username/FavoriteMovies/:MovieID<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Route to delete a movie from a user's list of favorite movies.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line479">line 479</a>
     </li></ul></dd>
     
 
@@ -164,13 +234,13 @@
 
         
             
-<h4 class="name" id="~logStream"><span class="type-signature">(inner, constant) </span>logStream<span class="type-signature"></span></h4>
+<h4 class="name" id="~GET/welcomemessage"><span class="type-signature">(inner) </span>GET / welcome message<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    Create a log stream for logging HTTP requests.
+    Default route to welcome users.
 </div>
 
 
@@ -208,7 +278,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line39">line 39</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line83">line 83</a>
     </li></ul></dd>
     
 
@@ -221,6 +291,743 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Example request: GET /
+// Example response:
+// "Welcome to the flixApp!"</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~GET/documentation"><span class="type-signature">(inner) </span>GET /documentation<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Route to serve documentation page.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line97">line 97</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~GET/movies/:title"><span class="type-signature">(inner) </span>GET /movies/:title<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Route to get data about a single movie by title.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line191">line 191</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~GET/movies/actors/:name"><span class="type-signature">(inner) </span>GET /movies/actors/:name<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Route to search movies by actor name.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line254">line 254</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~GET/movies/director/:name"><span class="type-signature">(inner) </span>GET /movies/director/:name<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Route to get data about a director by name.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line233">line 233</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~GET/movies/genre/:name"><span class="type-signature">(inner) </span>GET /movies/genre/:name<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Route to get data about a genre by name.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line212">line 212</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~GET/moviies"><span class="type-signature">(inner) </span>GET /moviies<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Get a list of all movies.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line107">line 107</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Response data format: Array of JSON objects
+[
+  {
+    "Title": "",
+    "Description": "",
+    "Genre": {
+      "Name": "",
+      "Description": "",
+    },
+    "Director": {
+      "Name": "",
+      "Bio": "",
+    },
+    "Actors": [""],
+    "ImagePath": "",
+    "Featured": Boolean,
+  }
+]</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~GET/users"><span class="type-signature">(inner) </span>GET /users<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Used to get data about all users.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line148">line 148</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~GET/users/:Username"><span class="type-signature">(inner) </span>GET /users/:Username<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Route to get data about a single user by username.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line169">line 169</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~POST/users"><span class="type-signature">(inner) </span>POST /users<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Add a new user.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line279">line 279</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>//JSON format
+{
+ID: Integer,
+Username: String,
+Password: String,
+Email: String,
+Birthday: Date
+}</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="~POST/users/:Username/FavoriteMovies/:MovieID"><span class="type-signature">(inner) </span>POST /users/:Username/FavoriteMovies/:MovieID<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Route to add a movie to a user's list of favorite movies.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line350">line 350</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~PUT/users/:Username"><span class="type-signature">(inner) </span>PUT /users/:Username<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Update user information.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line379">line 379</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>//JSON format
+JSON Format expected:
+Username: String,
+(required)
+Password: String,
+(required)
+Email: String,
+(required)
+Birthday: Date
+}</code></pre>
 
 
 
@@ -242,13 +1049,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-index.html">index</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-auth-route.html">auth-route</a></li><li><a href="module-index.html">index</a></li><li><a href="module-models.html">models</a></li><li><a href="module-passport-config.html">passport-config</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Sep 18 2023 23:44:19 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Sep 19 2023 16:53:37 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

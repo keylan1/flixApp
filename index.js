@@ -1,11 +1,8 @@
 /**
- *
- * @description This is the main module of this application which holds all the API calls
+ * @module index
+ * @description API Calls for Movie API
  */
 
-/**
- * Imports required modules and sets up the Express application.
- */
 require('dotenv').config();
 const express = require('express');
 const app = express();
@@ -33,9 +30,7 @@ mongoose.connect(process.env.CONNECTION_URI, {
   useUnifiedTopology: true,
 });*/
 
-/**
- * Create a log stream for logging HTTP requests.
- */
+//Create a log stream for logging HTTP requests.
 const logStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
   flags: 'a',
 });
@@ -45,10 +40,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-/**
- * Define allowed CORS origins.
- */
-
+//Define allowed CORS origins.
 const cors = require('cors');
 let allowedOrigins = [
   'https://keylan1.github.io',
@@ -62,9 +54,10 @@ let allowedOrigins = [
 ];
 
 /**
- * Configure CORS middleware.
+ * @description Configure CORS middleware.
  * @param {string} origin - The origin of the incoming request.
  * @param {function} callback - The callback function to invoke.
+ * @returns {void}
  */
 app.use(
   cors({
@@ -87,29 +80,55 @@ const passport = require('passport');
 require('./passport.js');
 
 // GET requests
-
 /**
- * Default route to welcome users.
- * @route GET /
+ * @description Default route to welcome users.
+ * @name GET / welcome message
  * @returns {string} Welcome message.
+ *
+ * @example
+ * // Example request: GET /
+ * // Example response:
+ * // "Welcome to the flixApp!"
  */
 app.get('/', (req, res) => {
   res.send('Welcome to the flixApp!');
 });
 
 /**
- * Route to serve documentation page.
- * @route GET /documentation
+ * @description Route to serve documentation page.
+ * @name GET /documentation
  * @returns {string} The HTML documentation page.
+ *
  */
 app.get('/documentation', (req, res) => {
   res.sendFile('public/documentation.html', { root: __dirname });
 });
 
 /**
- * Route to get data about all movies.
- * @route GET /movies
- * @returns {Array} An array of movie objects.
+ * @description Get a list of all movies.
+ * @name GET /moviies
+ * @returns {Array<Object>} An array of movie objects.
+ *
+ * @example
+ * // Response data format: Array of JSON objects
+ * [
+ *   {
+ *     "Title": "",
+ *     "Description": "",
+ *     "Genre": {
+ *       "Name": "",
+ *       "Description": "",
+ *     },
+ *     "Director": {
+ *       "Name": "",
+ *       "Bio": "",
+ *     },
+ *     "Actors": [""],
+ *     "ImagePath": "",
+ *     "Featured": Boolean,
+ *   }
+ * ]
+ * @param {authentication} - Bearer token (JWT)
  */
 app.get(
   '/movies' /*
@@ -127,11 +146,11 @@ app.get(
 );
 
 /**
- * Route to get data about all users.
- * @route GET /users
+ * @description Used to get data about all users.
+ * @name GET /users
+ * @param {string} users
  * @returns {Array} An array of user objects.
  */
-
 app.get(
   '/users',
   passport.authenticate('jwt', { session: false }),
@@ -148,12 +167,11 @@ app.get(
 );
 
 /**
- * Route to get data about a single user by username.
- * @route GET /users/:Username
+ * @description Route to get data about a single user by username.
+ * @name GET /users/:Username
  * @param {string} Username.path.required - The username of the user to retrieve.
  * @returns {Object} The user object.
  */
-
 app.get(
   '/users/:Username',
   passport.authenticate('jwt', { session: false }),
@@ -171,8 +189,8 @@ app.get(
 );
 
 /**
- * Route to get data about a single movie by title.
- * @route GET /movies/:title
+ * @description Route to get data about a single movie by title.
+ * @name GET /movies/:title
  * @param {string} title.path.required - The title of the movie to retrieve.
  * @returns {Object} The movie object.
  */
@@ -191,14 +209,12 @@ app.get(
   }
 );
 
-// Gets the data about a genre, by name
 /**
- * Route to get data about a genre by name.
- * @route GET /movies/genre/:name
+ * @description Route to get data about a genre by name.
+ * @name GET /movies/genre/:name
  * @param {string} name.path.required - The name of the genre to retrieve.
  * @returns {Object} The genre object.
  */
-
 app.get(
   '/movies/genre/:name',
   passport.authenticate('jwt', { session: false }),
@@ -214,10 +230,9 @@ app.get(
   }
 );
 
-// Gets the data about a director, by name
 /**
- * Route to get data about a director by name.
- * @route GET /movies/director/:name
+ * @description Route to get data about a director by name.
+ * @name GET /movies/director/:name
  * @param {string} name.path.required - The name of the director to retrieve.
  * @returns {Object} The director object.
  */
@@ -236,10 +251,9 @@ app.get(
   }
 );
 
-// Search movies by actor name
 /**
- * Route to search movies by actor name.
- * @route GET /movies/actors/:name
+ * @description Route to search movies by actor name.
+ * @name GET /movies/actors/:name
  * @param {string} name.path.required - The name of the actor to search for.
  * @returns {Array} An array of movie objects matching the actor name.
  */
@@ -262,24 +276,26 @@ app.get(
 
 // POST requests
 
-// Adds data for a new user to our list of users.
-/* Expected JSON format
-{
-  ID: Integer,
-  Username: String,
-  Password: String,
-  Email: String,
-  Birthday: Date
-}*/
 /**
- * Route to add data for a new user.
- * @route POST /users
+ * @description Add a new user.
+ * @name POST /users
  * @param {Object} req.body.required - The user data to be added.
  * @param {string} req.body.Username.required - The username of the new user.
  * @param {string} req.body.Password.required - The password of the new user.
  * @param {string} req.body.Email.required - The email of the new user.
  * @param {Date} req.body.Birthday.required - The birthday of the new user.
  * @returns {Object} The created user object.
+ *
+ * @example
+ * //JSON format
+ * {
+ * ID: Integer,
+ * Username: String,
+ * Password: String,
+ * Email: String,
+ * Birthday: Date
+ * }
+ *
  */
 app.post(
   '/users',
@@ -331,15 +347,13 @@ app.post(
   }
 );
 
-// Add a movie to their list of favorites
 /**
- * Route to add a movie to a user's list of favorite movies.
- * @route POST /users/:Username/FavoriteMovies/:MovieID
+ * @description Route to add a movie to a user's list of favorite movies.
+ * @name POST /users/:Username/FavoriteMovies/:MovieID
  * @param {string} Username.path.required - The username of the user.
  * @param {string} MovieID.path.required - The ID of the movie to add to favorites.
  * @returns {Object} The updated user object.
  */
-
 app.post(
   '/users/:Username/FavoriteMovies/:MovieID',
   passport.authenticate('jwt', { session: false }),
@@ -362,22 +376,9 @@ app.post(
 );
 
 // PUT requests
-
-// Allow users to update their user info, via username
-/* JSON Format expected:
-{
-  Username: String,
-  (required)
-  Password: String,
-  (required)
-  Email: String,
-  (required)
-  Birthday: Date
-}*/
-
 /**
- * Route to update user information.
- * @route PUT /users/:Username
+ * @description Update user information.
+ * @name PUT /users/:Username
  * @param {string} Username.path.required - The username of the user to update.
  * @param {Object} req.body.required - The updated user data.
  * @param {string} req.body.Username.required - The new username.
@@ -385,6 +386,18 @@ app.post(
  * @param {string} req.body.Email.required - The new email.
  * @param {Date} req.body.Birthday.required - The new birthday.
  * @returns {Object} The updated user object.
+ * @example
+ * //JSON format
+ * JSON Format expected:
+ * Username: String,
+ * (required)
+ * Password: String,
+ * (required)
+ * Email: String,
+ * (required)
+ * Birthday: Date
+ * }
+ *
  */
 app.put(
   '/users/:Username',
@@ -433,10 +446,16 @@ app.put(
 // DELETE requests
 
 /**
- * Route to delete a user by username.
- * @route DELETE /users/:Username
- * @param {string} Username.path.required - The username of the user to delete.
+ * @description Delete a user by username.
+ * @name DELETE /users/:Username
+ * @param {string} req.params.Username - The username of the user to delete.
  * @returns {string} A message indicating success or failure.
+ * @throws {Error} 404 - If the user does not exist.
+ * @example
+ * // Example request:
+ * // DELETE /users/usernameToDelete
+ * // Example response:
+ * // "usernameToDelete was deleted."
  */
 app.delete(
   '/users/:Username',
@@ -458,13 +477,12 @@ app.delete(
 );
 
 /**
- * Route to delete a movie from a user's list of favorite movies.
- * @route DELETE /users/:Username/FavoriteMovies/:MovieID
+ * @description Route to delete a movie from a user's list of favorite movies.
+ * @name DELETE /users/:Username/FavoriteMovies/:MovieID
  * @param {string} Username.path.required - The username of the user.
  * @param {string} MovieID.path.required - The ID of the movie to remove from favorites.
  * @returns {Object} The updated user object.
  */
-
 app.delete(
   '/users/:Username/FavoriteMovies/:MovieID',
   passport.authenticate('jwt', { session: false }),
@@ -487,7 +505,7 @@ app.delete(
 );
 
 /**
- * Error handling middleware for the application.
+ * @description Error handling middleware for the application.
  * @param {Error} err - The error object.
  * @param {Object} req - The request object.
  * @param {Object} res - The response object.

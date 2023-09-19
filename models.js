@@ -1,4 +1,6 @@
-/** @module for the models of the db collections movies and users
+/**
+ * @module models
+ * @description for the models of the db collections movies and users
  *
  **/
 const mongoose = require('mongoose');
